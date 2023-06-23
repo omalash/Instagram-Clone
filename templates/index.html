@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    {% if user.is_authenticated %}
+    <h1>Welcome, {{user.profile.first_name}}</h1>
+    {% else %}
+    <h1>Welcome to the App</h1>
+    <h3>Make an account or sign in right below!</h3>
+    {% endif %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <h4>Enjoy the app!</h4>
+    <a class="logout" href="logout">Logout</a>
+    {% else %}
+    <a class="register" href="register">Register</a>
+    <a class="login" href="login">Login</a>
+    {% endif %}
+</body>
+</html>

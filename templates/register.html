@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1>Register Here</h1>
+
+    {% for message in messages %}
+    <h3>{{message}}</h3>
+    {% endfor %}
+
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'password_indicators.js' %}"></script>
+</head>
+<body>
+    <form method="POST" action="register">
+        {% csrf_token %}
+        <p>Enter your first name: </p>
+        <input type="text" name="first_name">
+        <p>Enter your last name: </p>
+        <input type="text" name="last_name">
+        <p>Enter your username: </p>
+        <input type="text" name="username">
+        <p>Enter your email: </p>
+        <input type="email" name="email">
+        <p>Enter your password: </p>
+        <input type="password" name="password" id="password-input">
+        <div id="password-indicators">
+            <p>Length: <span id="length-indicator"></span></p>
+            <p>Uppercase: <span id="uppercase-indicator"></span></p>
+            <p>Lowercase: <span id="lowercase-indicator"></span></p>
+            <p>Number: <span id="number-indicator"></span></p>
+            <p>Special Character: <span id="special-char-indicator"></span></p>
+        </div>
+        <p>Retype your password: </p>
+        <input type="password" name="retype_password">
+        <br><br>
+        <input type="submit">
+    </form>
+</body>
+</html>
