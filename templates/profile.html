@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <h1>Profile</h1>
+
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'profile.js' %}"></script>
+</head>
+<body>
+    <h4>{{ user.username }}</h4>
+    <p>{{ user_profile.description }}</p>
+    <p>Posts: {{ user_profile.posts.count }}</p>
+    <p>Followers: {{ user_profile.followers.count }}</p>
+    <p>Following: {{ user_profile.following.count }}</p>
+
+    <br><button class="edit-profile">Edit profile</button><br><br>
+    <div id="edit-form" style="display: none;">
+        <input type="text" id="new-description" value="{{ user_profile.description }}">
+        <button id="save-profile">Save</button>
+    </div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import UserProfile
@@ -28,8 +28,10 @@ def register(request):
                     return redirect('register')
                 else:
                     user = User.objects.create_user(username=username, email=email, password=password)
+                    user.first_name = (firstname)
+                    user.last_name = (lastname)
                     user.save()
-                    profile = UserProfile.objects.create(user=user, first_name=firstname, last_name=lastname)
+                    profile = UserProfile.objects.create(user=user)
                     profile.save()
                     return redirect('login')
             else:
@@ -50,7 +52,6 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            user_profile = UserProfile.objects.get(user=user)
             return redirect('/')
         else:
             messages.info(request, 'Credentials Invalid. Try again')
@@ -61,3 +62,9 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    user_profile = get_object_or_404(UserProfile, user=user)
+    # Pass the user and user_profile objects to the template
+    return render(request, 'profile.html', {'user_profile': user_profile})

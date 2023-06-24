@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <h1>Login Here</h1>
+
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+
+    {% for message in messages %}
+    <h4 class="error-message">{{message}}</h4>
+    {% endfor %}
+
 </head>
 <body>
     <form method="POST" action="login">

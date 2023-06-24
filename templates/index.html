@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     {% if user.is_authenticated %}
-    <h1>Welcome, {{user.profile.first_name}}</h1>
+    <h1>Welcome, {{user.first_name}}</h1>
     {% else %}
     <h1>Welcome to the App</h1>
     <h3>Make an account or sign in right below!</h3>
@@ -14,6 +14,7 @@
 <body>
     {% if user.is_authenticated %}
     <h4>Enjoy the app!</h4>
+    <a class="view_profile" href="{% url 'profile' username=user.username %}">View Profile</a>
     <a class="logout" href="logout">Logout</a>
     {% else %}
     <a class="register" href="register">Register</a>
