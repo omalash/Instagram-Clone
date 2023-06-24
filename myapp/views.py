@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import UserProfile
+from .models import UserProfile, Post
 from .helpers import is_valid_password
 
 # Create your views here.
@@ -66,5 +66,16 @@ def logout(request):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     user_profile = get_object_or_404(UserProfile, user=user)
+    
     # Pass the user and user_profile objects to the template
     return render(request, 'profile.html', {'user_profile': user_profile})
+
+def create_post(request):
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        if image:
+            user_profile = request.user.profile
+            caption = request.POST.get('caption')
+            post = Post.objects.create(user_profile=user_profile, caption=caption, image=image)
+            post.save()
+    return redirect('/')

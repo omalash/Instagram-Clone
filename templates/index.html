@@ -4,21 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+
     {% if user.is_authenticated %}
-    <h1>Welcome, {{user.first_name}}</h1>
+        <h1>Welcome, {{user.first_name}}</h1>
     {% else %}
-    <h1>Welcome to the App</h1>
-    <h3>Make an account or sign in right below!</h3>
+        <h1>Welcome to the App</h1>
+        <h3>Make an account or sign in right below!</h3>
     {% endif %}
 </head>
 <body>
     {% if user.is_authenticated %}
-    <h4>Enjoy the app!</h4>
-    <a class="view_profile" href="{% url 'profile' username=user.username %}">View Profile</a>
-    <a class="logout" href="logout">Logout</a>
+        <h4>Enjoy the app!</h4>
+        <a class="view_profile" href="{% url 'profile' username=user.username %}">View Profile</a>
+        <br><br>
+        <a id="create-post" href="">Create Post</a><br><br>
+        <div class="create-post-content" style="display: none;">
+            <form id="create-post-form" method="POST" enctype="multipart/form-data" action="{% url 'create_post' %}">
+                {% csrf_token %}
+                <input type="file" name="image" accept="image/*"><br>
+                <input type="text" name="caption" placeholder="Write a caption..."><br>
+                <button type="submit" name="share">Share</button>
+                <br><br>
+            </form>
+        </div>
+
+        <a class="logout" href="logout">Logout</a>
+
     {% else %}
-    <a class="register" href="register">Register</a>
-    <a class="login" href="login">Login</a>
+        <a class="register" href="register">Register</a>
+        <a class="login" href="login">Login</a>
     {% endif %}
 </body>
 </html>
