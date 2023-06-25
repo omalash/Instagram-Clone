@@ -9,8 +9,8 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
     path('<str:username>/', views.profile, name='profile'),
-    path('create_post', views.create_post, name='create_post')
-]
+    path('create_post', views.create_post, name='create_post'),
+    path('<str:username>/edit_profile', views.edit_profile, name='edit_profile')]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

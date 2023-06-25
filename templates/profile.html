@@ -18,8 +18,17 @@
 
     <br><button class="edit-profile">Edit profile</button><br><br>
     <div id="edit-form" style="display: none;">
-        <input type="text" id="new-description" value="{{ user_profile.description }}">
-        <button id="save-profile">Save</button>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'edit_profile' user_profile.user.username %}">
+            {% csrf_token %}
+            Profile Picture: 
+            <br><img src="{{ user_profile.pfp.url}}" width="100px" height="100px"><br>
+            <input type="file" name="new-pfp" accept="image/*"><br>
+            Firstname: <input type="text" name="new-firstname" value="{{ user_profile.user.first_name }}"><br>
+            Lastname: <input type="text" name="new-lastname" value="{{ user_profile.user.last_name }}"><br>
+            Username: <input type="text" name="new-username" value="{{ user_profile.user.username }}"><br>
+            Bio: <input type="text" name="new-description" value="{{ user_profile.description }}"><br><br>
+            <button id="save-profile">Save</button><br><br>
+        </form>
     </div>    
 
     {% for post in user_profile.posts.all %}

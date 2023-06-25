@@ -54,7 +54,7 @@ def login(request):
             auth.login(request, user)
             return redirect('/')
         else:
-            messages.info(request, 'Credentials Invalid. Try again')
+            messages.error(request, 'Credentials Invalid. Try again')
             return redirect('login')
     else:
         return render(request, 'login.html')
@@ -66,7 +66,7 @@ def logout(request):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     user_profile = get_object_or_404(UserProfile, user=user)
-    
+
     # Pass the user and user_profile objects to the template
     return render(request, 'profile.html', {'user_profile': user_profile})
 
@@ -78,4 +78,25 @@ def create_post(request):
             caption = request.POST.get('caption')
             post = Post.objects.create(user_profile=user_profile, caption=caption, image=image)
             post.save()
+            messages.success(request, "Post created successfully")
+        else:
+            messages.error(request, "Upload an image")
+            
     return redirect('/')
+
+def edit_profile(request, username):
+    if request.method == "POST":
+        user = request.user
+        user.first_name = request.POST.get('new-firstname')
+        user.last_name = request.POST.get('new-lastname')
+        user.username = request.POST.get('new-username')
+        user.save()
+
+        user_profile = user.profile
+        user_profile.description = request.POST.get('new-description')
+        new_pfp = request.FILES.get('new-pfp')  
+        if new_pfp:
+            user_profile.pfp = new_pfp
+        user_profile.save()
+
+        return redirect('profile', username=username)

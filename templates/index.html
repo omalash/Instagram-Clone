@@ -6,6 +6,7 @@
     <title>Homepage</title>
     
     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/index.js' %}"></script>
 
@@ -19,6 +20,15 @@
 <body>
     {% if user.is_authenticated %}
         <h4>Enjoy the app!</h4>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    <h4>{{ message }}</h4>
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <a class="view_profile" href="{% url 'profile' username=user.username %}">View Profile</a>
         <br><br>
         <a id="create-post" href="">Create Post</a><br><br>
@@ -32,6 +42,7 @@
             </form>
         </div>
 
+        <a class="search" href=""></a>
         <a class="logout" href="logout">Logout</a>
 
     {% else %}
