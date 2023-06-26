@@ -98,5 +98,15 @@ def edit_profile(request, username):
         if new_pfp:
             user_profile.pfp = new_pfp
         user_profile.save()
+    
+    return redirect('profile', username=user.username)
 
-        return redirect('profile', username=username)
+def search(request):
+    search_query = request.GET.get('search_result')
+    try:
+        user = User.objects.get(username=search_query)
+        user_profile = UserProfile.objects.get(user=user)
+        return redirect('profile', username=user.username)
+    except User.DoesNotExist:
+        messages.error(request, 'User does not exist')
+        return redirect('/')

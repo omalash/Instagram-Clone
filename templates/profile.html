@@ -11,12 +11,18 @@
 <body>
     <img src="{{ user_profile.pfp.url }}" alt="Profile Picture">
     <h4>{{ user_profile.user.username }}</h4>
-    <p>{{ user_profile.description }}</p>
+    <p><i>{{ user_profile.description }}</i></p>
+    <br>
     <p>Posts: {{ user_profile.posts.count }}</p>
     <p>Followers: {{ user_profile.followers.count }}</p>
     <p>Following: {{ user_profile.following.count }}</p>
 
-    <br><button class="edit-profile">Edit profile</button><br><br>
+    {% if user_profile.user == user %}
+        <br><button class="edit-profile">Edit profile</button><br><br>
+    {% else %}
+        <br><button class="follow_button">Follow</button><br><br>
+    {% endif %}
+
     <div id="edit-form" style="display: none;">
         <form method="POST" enctype="multipart/form-data" action="{% url 'edit_profile' user_profile.user.username %}">
             {% csrf_token %}
@@ -31,6 +37,7 @@
         </form>
     </div>    
 
+    <h2>Posts</h2><hr><br>
     {% for post in user_profile.posts.all %}
     <style>
         .post-img {

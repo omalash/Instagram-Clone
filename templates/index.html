@@ -42,7 +42,13 @@
             </form>
         </div>
 
-        <a class="search" href=""></a>
+        <a class="search" href="/search/">Search</a>
+        <div class="search-bar" style="display: none;">
+            <form method="GET" action="{% url 'search' %}">
+                <br><input type="text" name="search_result" id="search-input" placeholder="Search">
+            </form>
+        </div>
+        <br><br>
         <a class="logout" href="logout">Logout</a>
 
     {% else %}

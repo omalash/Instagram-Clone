@@ -6,5 +6,9 @@ $(document).ready(function() {
     $("#save-profile").click(function() {
         $("#edit-form").hide();
     });
+
+    $("follow-button").click(function() {
+        
+    })
 });
 
