@@ -19,8 +19,6 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-        <h4>Enjoy the app!</h4>
-
         {% if messages %}
             {% for message in messages %}
                 <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
@@ -29,7 +27,7 @@
             {% endfor %}
         {% endif %}
 
-        <a class="view_profile" href="{% url 'profile' username=user.username %}">View Profile</a>
+        <br><a class="view_profile" href="{% url 'profile' username=user.username %}">View Profile</a>
         <br><br>
         <a id="create-post" href="">Create Post</a><br><br>
         <div class="create-post-content" style="display: none;">

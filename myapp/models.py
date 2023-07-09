@@ -4,11 +4,11 @@ import os
 
 def user_profile_picture_path(instance, filename):
     # Upload path for user profile pictures
-    return os.path.join('profile_pictures', f'user_{instance.user.username}', filename)
+    return os.path.join('profile_pictures', f'user_{instance.user.id}', filename)
 
 def post_image_path(instance, filename):
     # Upload path for post images
-    return os.path.join('post_images', f'user_{instance.user_profile.user.username}', filename)
+    return os.path.join('post_images', f'user_{instance.user_profile.user.id}', filename)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -25,6 +25,14 @@ class Post(models.Model):
     caption = models.CharField(max_length=500, null=True)
     image = models.ImageField(upload_to=post_image_path)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(UserProfile, related_name='post_likes')
+
+class Comment(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(UserProfile, related_name='comment_likes')
 
     def __str__(self):
         return self.caption

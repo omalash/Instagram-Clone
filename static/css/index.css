@@ -1,7 +1,22 @@
-.success {
-    color: green;
-}
-
-.error {
+* {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  h3 {
+    font-size: 16px;
+  }
+  
+  .error {
     color: red;
-}
+  }
+  
+  .success {
+    color: green;
+  }
+  

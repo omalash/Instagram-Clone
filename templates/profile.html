@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram</title>
     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/profile.js' %}"></script>
 </head>
 <body>
-    <img src="{{ user_profile.pfp.url }}" alt="Profile Picture">
+    <img id="profile-pic-display" src="{{ user_profile.pfp.url }}" alt="Profile Picture">
     <h4>{{ user_profile.user.username }}</h4>
     <p><i>{{ user_profile.description }}</i></p>
-    <br>
-    <p>Posts: {{ user_profile.posts.count }}</p>
-    <p>Followers: {{ user_profile.followers.count }}</p>
-    <p>Following: {{ user_profile.following.count }}</p>
+    
+    <br><div class="profile-header">
+        <span>Posts: {{ user_profile.posts.count }}</span>
+        <span>Followers: {{ user_profile.followers.count }}</span>
+        <span>Following: {{ user_profile.following.count }}</span>
+    </div><br>
 
     {% if user_profile.user == user %}
         <br><button class="edit-profile">Edit profile</button><br><br>
@@ -37,20 +40,17 @@
         </form>
     </div>    
 
-    <h2>Posts</h2><hr><br>
+    <h2>Posts</h2>
+    <hr>
+    <br>
     {% for post in user_profile.posts.all %}
-    <style>
-        .post-img {
-            width: 200px;
-            height: 250px;
-        }
-    </style>
     <img class="post-img" src="{{post.image.url}}">
     <p>{{post.caption}}</p>
     {% endfor %}
 
     <br>
+    
     <a class="homepage" href="/">Home</a>
-
+    
 </body>
 </html>

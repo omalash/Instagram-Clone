@@ -7,7 +7,7 @@ $(document).ready(function() {
         $("#edit-form").hide();
     });
 
-    $("follow-button").click(function() {
+    $(".follow-button").click(function() {
         
     })
 });

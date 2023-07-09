@@ -66,6 +66,7 @@ def logout(request):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     user_profile = get_object_or_404(UserProfile, user=user)
+    posts = user_profile.posts.all().order_by('-created_at')
 
     # Pass the user and user_profile objects to the template
     return render(request, 'profile.html', {'user_profile': user_profile})
@@ -76,7 +77,7 @@ def create_post(request):
         if image:
             user_profile = request.user.profile
             caption = request.POST.get('caption')
-            post = Post.objects.create(user_profile=user_profile, caption=caption, image=image)
+            post = Post.objects.create(user_profile=user_profile, caption=caption, image=image, likes=0)
             post.save()
             messages.success(request, "Post created successfully")
         else:
