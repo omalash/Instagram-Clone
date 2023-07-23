@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import UserProfile, Post
+from .models import Profile, Post
 from .helpers import is_valid_password
 
 # Create your views here.
@@ -31,7 +31,7 @@ def register(request):
                     user.first_name = (firstname)
                     user.last_name = (lastname)
                     user.save()
-                    profile = UserProfile.objects.create(user=user)
+                    profile = Profile.objects.create(user=user)
                     profile.save()
                     return redirect('login')
             else:
@@ -65,25 +65,28 @@ def logout(request):
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    user_profile = get_object_or_404(UserProfile, user=user)
-    posts = user_profile.posts.all().order_by('-created_at')
+    profile = get_object_or_404(Profile, user=user)
+    posts = profile.posts.all().order_by('-created_at')
 
-    # Pass the user and user_profile objects to the template
-    return render(request, 'profile.html', {'user_profile': user_profile})
+    # Pass the user and profile objects to the template
+    return render(request, 'profile.html', {'profile': profile})
 
 def create_post(request):
     if request.method == "POST":
         image = request.FILES.get('image')
         if image:
-            user_profile = request.user.profile
+            profile = request.user.profile
             caption = request.POST.get('caption')
-            post = Post.objects.create(user_profile=user_profile, caption=caption, image=image, likes=0)
+            post = Post.objects.create(profile=profile, caption=caption, image=image)
+            post.likes.set([])
             post.save()
             messages.success(request, "Post created successfully")
         else:
             messages.error(request, "Upload an image")
             
     return redirect('/')
+
+# def add_like_to_post(request, post_id): 
 
 def edit_profile(request, username):
     if request.method == "POST":
@@ -93,12 +96,12 @@ def edit_profile(request, username):
         user.username = request.POST.get('new-username')
         user.save()
 
-        user_profile = user.profile
-        user_profile.description = request.POST.get('new-description')
+        profile = user.profile
+        profile.description = request.POST.get('new-description')
         new_pfp = request.FILES.get('new-pfp')  
         if new_pfp:
-            user_profile.pfp = new_pfp
-        user_profile.save()
+            profile.pfp = new_pfp
+        profile.save()
     
     return redirect('profile', username=user.username)
 
@@ -106,7 +109,7 @@ def search(request):
     search_query = request.GET.get('search_result')
     try:
         user = User.objects.get(username=search_query)
-        user_profile = UserProfile.objects.get(user=user)
+        profile = Profile.objects.get(user=user)
         return redirect('profile', username=user.username)
     except User.DoesNotExist:
         messages.error(request, 'User does not exist')

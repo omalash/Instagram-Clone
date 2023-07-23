@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='userprofile',
             name='pfp',
-            field=models.ImageField(default='default_pfp.jpg', null=True, upload_to=myapp.models.user_profile_picture_path),
+            field=models.ImageField(default='default_pfp.jpg', null=True, upload_to=myapp.models.profile_picture_path),
         ),
     ]
