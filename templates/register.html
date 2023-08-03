@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Instagram</title>
     <h1>Register Here</h1>
-
-    <style>
-        .error-message {
-            color: red;
-        }
-    </style>
-
+    
     {% for message in messages %}
-    <h4 class="error-message">{{message}}</h4>
+        <h4 class="error-message">{{message}}</h4>
     {% endfor %}
 
     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/password_indicators.js' %}"></script>
 </head>
@@ -33,17 +28,19 @@
         <input type="email" name="email">
         <p>Enter your password: </p>
         <input type="password" name="password" id="password-input">
-        <!-- <div id="password-indicators">
+        <div id="password-indicators" style="display: none">
             <p>Length: <span id="length-indicator"></span></p>
             <p>Uppercase: <span id="uppercase-indicator"></span></p>
             <p>Lowercase: <span id="lowercase-indicator"></span></p>
             <p>Number: <span id="number-indicator"></span></p>
             <p>Special Character: <span id="special-char-indicator"></span></p>
-        </div> -->
+        </div>
         <p>Retype your password: </p>
         <input type="password" name="retype_password">
         <br><br>
         <input type="submit">
     </form>
+
+    <br><a class="homepage" href="/">Home</a>
 </body>
 </html>

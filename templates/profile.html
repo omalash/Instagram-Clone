@@ -16,14 +16,21 @@
     
     <br><div class="profile-header">
         <span>Posts: {{ profile.posts.count }}</span>
-        <span>Followers: {{ profile.followers.count }}</span>
-        <span>Following: {{ profile.following.count }}</span>
+        <span id="followers-count">Followers: {{ profile.followers.count }}</span>
+        <span id="following-count">Following: {{ profile.following.count }}</span>
     </div><br>
 
     {% if profile.user == user %}
         <br><button class="edit-profile">Edit profile</button><br><br>
     {% else %}
-        <br><button class="follow_button">Follow</button><br><br>
+        {% csrf_token %}
+        <br><button class="follow-button" data-other-profile="{{ profile.user }}">
+            {% if is_following %}
+                Unfollow
+            {% else %}
+                Follow
+            {% endif %}
+        </button><br><br>
     {% endif %}
 
     <div id="edit-form" style="display: none;">
@@ -38,20 +45,36 @@
             Bio: <input type="text" name="new-description" value="{{ profile.description }}"><br><br>
             <button id="save-profile">Save</button><br><br>
         </form>
-    </div>    
+    </div>
 
     <h2>Posts</h2>
     <hr>
     <br>
-    {% for post in profile.posts.all %}
-    <img class="post-img" src="{{post.image.url}}">
-    <p>{{post.caption}}</p>
-    <h5>Likes: {{post.likes.count}} </h5>
+
+    {% for post in posts %}
+        <img class="post-img" src="{{ post.image.url }}">
+        <p>{{ post.caption }}</p>
+        <h5 class="likes-display">Likes: <span id="likes-count-{{ post.id }}">{{ post.likes.count }}</span></h5>
+        {% csrf_token %}
+        <button class="like-button" data-post-id="{{ post.id }}">
+            {% if post.is_liked %}
+                Unlike
+            {% else %}
+                Like
+            {% endif %}
+        </button>
+        <br><br>
     {% endfor %}
 
     <br>
     
-    <a class="homepage" href="/">Home</a>
-    
+    <a class="search" href="/search/">Search</a>
+    <div class="search-bar" style="display: none;">
+        <form method="GET" action="{% url 'search' %}">
+            <br><input type="text" name="search_result" id="search-input" placeholder="Search">
+        </form>
+    </div>
+
+    <br><a class="homepage" href="/">Home</a>
 </body>
 </html>

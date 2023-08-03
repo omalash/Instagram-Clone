@@ -12,8 +12,9 @@ urlpatterns = [
     path('<str:username>/edit_profile', views.edit_profile, name='edit_profile'),
     path('search/', views.search, name='search'),
     path('<str:username>/', views.profile, name='profile'),
+    path('like_post/<int:post_id>/', views.add_like_to_post, name='add_like_to_post'),
+    path('follow_user/<str:username>/', views.follow_user, name='follow_user')
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

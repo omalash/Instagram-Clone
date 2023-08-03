@@ -1,4 +1,3 @@
-
 body {
 	font-family: Arial, sans-serif;
 	margin: 10;
@@ -13,12 +12,12 @@ body {
 }
 
 #profile-pic-display {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
+	width: 160px;
+	height: 160px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .profile-header span {
-    margin-right: 10px;
+	margin-right: 10px;
 }

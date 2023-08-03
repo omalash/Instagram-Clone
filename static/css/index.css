@@ -1,22 +1,25 @@
 * {
-    font-family: Arial, sans-serif;
-    background-color: #fafafa;
-  }
-  
-  h1 {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  h3 {
-    font-size: 16px;
-  }
-  
-  .error {
-    color: red;
-  }
-  
-  .success {
-    color: green;
-  }
-  
+	font-family: Arial, sans-serif;
+	background-color: #fafafa;
+}
+
+.welcome-message {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#signup-message {
+	font-size: 16px;
+}
+
+/* .user-actions {
+    display: inline;
+} */
+
+.error {
+	color: red;
+}
+
+.success {
+	color: green;
+}

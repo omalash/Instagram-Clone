@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
-    
+    <title>Instagram</title>
+
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/index.js' %}"></script>
 
     {% if user.is_authenticated %}
-        <h1>Welcome, {{user.first_name}}</h1>
+        <h1 class="welcome-message">Welcome, {{user.first_name}}</h1>
     {% else %}
-        <h1>Welcome to the App</h1>
-        <h3>Make an account or sign in right below!</h3>
+        <h1 class="welcome-message">Welcome to the App</h1>
+        <h3 id="signup-message">Make an account or sign in right below!</h3>
     {% endif %}
 </head>
 <body>
