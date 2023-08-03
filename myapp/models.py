@@ -14,12 +14,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     description = models.CharField(max_length=150, default="", null=True)
     pfp = models.ImageField(upload_to=profile_picture_path, default="default_pfp.jpg", null=True)
-    following = models.ManyToManyField(User, related_name='followers')
-    followers = models.ManyToManyField(User, related_name='following')
+    following = models.ManyToManyField(User, related_name='following', symmetrical=False)
+    followers = models.ManyToManyField(User, related_name='followers', symmetrical=False)
 
     def __str__(self):
         return self.user.username
-    
+
 class Post(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     caption = models.CharField(max_length=500, null=True, blank=True)
